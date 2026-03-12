@@ -1,6 +1,7 @@
 import swaggerJSDoc from "swagger-jsdoc";
 import path from "path";
 import { fileURLToPath } from "url";
+import config from "./config.js";
 
 // ensure correct directory resolution even when compiled or executed from different cwd
 const __filename = fileURLToPath(import.meta.url);
@@ -16,7 +17,7 @@ export const swaggerOptions = {
     },
     servers: [
       {
-        url: "http://localhost:8080/",
+        url: `http://localhost:${config.port}/`,
         description: "Servidor de desarrollo",
       },
     ],

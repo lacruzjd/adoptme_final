@@ -12,16 +12,18 @@ import swaggerDocs from "./config/swagger.js";
 import { errorHandler } from "./middleware/errorHandler.js";
 import { marked } from "marked";
 import { engine } from "express-handlebars";
+import cors from "cors";
 import fs from "fs";
 
 const app = express();
+app.use(cors());
+
 app.engine("handlebars", engine());
 app.set("view engine", "handlebars");
 app.set("views", "./src/public/views");
 
 const PORT = config.port;
 await connectMongoose();
-
 app.use(express.json());
 app.use(cookieParser());
 app.use(express.static("./src/public"));

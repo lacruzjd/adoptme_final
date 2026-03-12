@@ -1,0 +1,153 @@
+paths:
+  /api/pets:
+    get:
+      summary: Obtener todas las mascotas
+      description: Devuelve una lista de todas las mascotas en el sistema.
+      tags:
+        - Pets
+      responses:
+        "200":
+          description: Operacion exitosa
+        "404":
+          description: No se encontraron mascotas
+        "500":
+          description: Error del servidor
+    post:
+      summary: Agregar una nueva mascota
+      description: Crea una nueva mascota en el sistema.
+      tags:
+        - Pets
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/Pet"
+      responses:
+        "201":
+          description: Mascota creada exitosamente
+        "400":
+          description: Solicitud inválida
+        "500":
+          description: Error del servidor
+  /api/pets/{pid}:
+    get:
+      summary: Obtener una mascota específica
+      description: Devuelve los detalles de una mascota específica en el sistema.
+      tags:
+        - Pets
+      parameters:
+        - name: pid
+          in: path
+          required: true
+          description: ID de la mascota a obtener
+          schema:
+            type: string
+      responses:
+        "200":
+          description: Operacion exitosa
+        "404":
+          description: Mascota no encontrada
+        "500":
+          description: Error del servidor
+    put:
+      summary: Actualizar una mascota existente
+      description: Actualiza los datos de una mascota existente en el sistema.
+      tags:
+        - Pets
+      parameters:
+        - name: pid
+          in: path
+          required: true
+          description: ID de la mascota a actualizar
+          schema:
+            type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/Pet"
+      responses:
+        "200":
+          description: Mascota actualizada exitosamente
+        "400":
+          description: Solicitud inválida
+        "404":
+          description: Mascota no encontrada
+        "500":
+          description: Error del servidor
+    delete:
+      summary: Eliminar una mascota existente
+      description: Elimina una mascota del sistema.
+      tags:
+        - Pets
+      parameters:
+        - name: pid
+          in: path
+          required: true
+          description: ID de la mascota a eliminar
+          schema:
+            type: string
+      responses:
+        "200":
+          description: Mascota eliminada exitosamente
+        "404":
+          description: Mascota no encontrada
+        "500":
+          description: Error del servidor
+  /api/pets/with-image/:
+    post:
+      summary: Agregar una mascota con imagen
+      description: Permite agreagr una nueva mascota con una imagen.
+      tags:
+        - Pets
+      requestBody:
+        required: true
+        content:
+          multipart/form-data:
+            schema:
+              type: object
+              properties:
+                name:
+                  type: string
+                  description: Nombre de la mascota
+                specie:
+                  type: string
+                  description: Especie de la mascota
+                birthDate:
+                  type: string
+                  format: date
+                  description: Fecha de nacimiento de la mascota
+                file:
+                  type: string
+                  format: binary
+                  description: Archivo de imagen a subir
+      responses:
+        "200":
+          description: Imagen agregada exitosamente
+        "400":
+          description: Solicitud inválida
+        "404":
+          description: Mascota no encontrada
+        "500":
+          description: Error del servidor
+components:
+  schemas:
+    Pet:
+      type: object
+      properties:
+        name:
+          type: string
+          description: Nombre de la mascota
+        specie:
+          type: string
+          description: Especie de la mascota
+        birthDate:
+          type: string
+          format: date
+          description: Fecha de nacimiento de la mascota
+        required:
+          - name
+          - specie
+          - birthDate

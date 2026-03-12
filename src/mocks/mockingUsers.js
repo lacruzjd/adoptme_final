@@ -7,8 +7,8 @@ export async function generateUsers(cant) {
     const hashPassword = await bcrypt.hash("coder123", 10);
 
     users.push({
-      first_name: faker.person.firstName(),
-      last_name: faker.person.lastName(),
+      firstName: faker.person.firstName(),
+      lastName: faker.person.lastName(),
       email: faker.internet.email(),
       password: hashPassword,
       role: faker.helpers.arrayElement(["user", "admin"]),

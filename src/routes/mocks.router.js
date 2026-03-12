@@ -5,6 +5,7 @@ import {
   generateUsers50,
   generatePetsCant,
   generateUsersCant,
+  deleteDataMocks,
 } from "../mocks/mocks.controller.js";
 const router = Router();
 
@@ -13,5 +14,6 @@ router.get("/mockingpets/:cant", generatePetsCant);
 router.get("/mockingusers", generateUsers50);
 router.get("/mockingusers/:cant", generateUsersCant);
 router.get("/generatedata/users/:users/pets/:pets", generateData);
+router.get("/deleteDataMocks", deleteDataMocks);
 
 export default router;

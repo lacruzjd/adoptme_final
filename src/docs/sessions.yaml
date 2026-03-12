@@ -1,0 +1,106 @@
+paths:
+  /api/sessions/register:
+    post:
+      summary: Registrar un nuevo usuario
+      description: Permite a un usuario registrarse en el sistema.
+      tags:
+        - Sessions
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/User"
+      responses:
+        "201":
+          description: Usuario registrado exitosamente
+        "400":
+          description: Solicitud inválida
+        "409":
+          description: Usuario ya existe
+        "500":
+          description: Error del servidor
+  /api/sessions/login:
+    post:
+      summary: Iniciar sesión de usuario
+      description: Permite a un usuario iniciar sesión en el sistema.
+      tags:
+        - Sessions
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/Session"
+              required:
+                - email
+                - password
+      responses:
+        "200":
+          description: Inicio de sesión exitoso
+        "400":
+          description: Solicitud inválida
+        "401":
+          description: Credenciales incorrectas
+        "500":
+          description: Error del servidor
+  /api/sessions/current:
+    get:
+      summary: Obtener información del usuario actual
+      description: Devuelve los detalles del usuario actualmente autenticado.
+      tags:
+        - Sessions
+      responses:
+        "200":
+          description: Operacion exitosa
+        "401":
+          description: No autenticado
+        "500":
+          description: Error del servidor
+  /api/sessions/logout:
+    post:
+      summary: Cerrar sesión de usuario
+      description: Permite a un usuario cerrar sesión en el sistema.
+      tags:
+        - Sessions
+      responses:
+        "200":
+          description: Cierre de sesión exitoso
+        "500":
+          description: Error del servidor
+components:
+  schemas:
+    Session:
+      type: object
+      properties:
+        email:
+          type: string
+          description: Correo electrónico del usuario
+        password:
+          type: string
+          description: Contraseña del usuario
+      required:
+        - email
+        - password
+    User:
+      type: object
+      properties:
+        firstName:
+          type: string
+          description: Nombre del usuario
+        lastName:
+          type: string
+          description: Apellido del usuario
+        email:
+          type: string
+          format: email
+          description: Correo electrónico del usuario
+        password:
+          type: string
+          format: password
+          description: Contraseña del usuario
+      required:
+        - firstName
+        - lastName
+        - email
+        - password

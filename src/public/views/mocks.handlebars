@@ -1,0 +1,67 @@
+<h1>Mock Data</h1>
+
+<a href="/">Home</a>
+
+<h2>Generate Mock Data</h2>
+
+<form id="post">
+  <label for="userId">Cantidad de usuarios:</label>
+  <input type="number" id="userId" name="userId" min="1" max="10" />
+  <label for="petId">Cantidad de mascotas:</label>
+  <input type="number" id="petId" name="petId" min="1" max="10" required />
+  <button type="submit">Generate Mock Data</button>
+</form>
+
+<div id="result"></div>
+
+<h2>Eliminar Mock Data</h2>
+<button id="eliminarmocks">Eliminar Mock Data</button>
+<div id="resultdelete"></div>
+
+<script>
+
+
+  document.getElementById("eliminarmocks").addEventListener("click", async () => {
+    try {
+      const response = await fetch("/api/mocks/deleteDataMocks", { method: "GET" });
+      const data = await response.json();
+
+      if (data.payload.status !== 'error') {
+        document.getElementById("resultdelete").textContent = JSON.stringify(
+          data.payload,
+          null,
+          2,
+        );
+
+      }
+
+    } catch (error) {
+      console.error("Error:", error);
+      document.getElementById("resultdelete").textContent =
+        "No hay datos para eliminar";
+    }
+  });
+
+  document.getElementById("post").addEventListener("submit", async (e) => {
+    e.preventDefault();
+    const userId = document.getElementById("userId").value;
+    const petId = document.getElementById("petId").value;
+    try {
+      const response = await fetch(
+        `/api/mocks/generatedata/users/${userId}/pets/${petId}`,
+        { method: "GET" },
+      );
+      const data = await response.json();
+      document.getElementById("result").textContent = JSON.stringify(
+        data.payload,
+        null,
+        2,
+      );
+    } catch (error) {
+      console.error("Error:", error);
+      document.getElementById("result").textContent =
+        "Error generating mock data.";
+    }
+  });
+
+</script>

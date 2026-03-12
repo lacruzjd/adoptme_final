@@ -1,0 +1,74 @@
+paths:
+  /api/adoptions:
+    get:
+      summary: Obtener todas las adopciones
+      description: Devuelve una lista de todas las adopciones en el sistema.
+      tags:
+        - Adoptions
+      responses:
+        "200":
+          description: Operacion exitosa
+        "404":
+          description: No se encontraron adopciones
+        "500":
+          description: Error del servidor
+  /api/adoptions/{aid}:
+    get:
+      summary: Obtener una adopción específica
+      description: Devuelve los detalles de una adopción específica en el sistema.
+      tags:
+        - Adoptions
+      parameters:
+        - name: aid
+          in: path
+          required: true
+          description: ID de la adopción a obtener
+          schema:
+            type: string
+      responses:
+        "200":
+          description: Operacion exitosa
+        "404":
+          description: Adopción no encontrada
+        "500":
+          description: Error del servidor
+  /api/adoptions/{uid}/{pid}:
+    post:
+      summary: Crear una nueva adopción
+      description: Crea una nueva adopción en el sistema.
+      tags:
+        - Adoptions
+      parameters:
+        - name: uid
+          in: path
+          required: true
+          description: ID del usuario adoptante
+          schema:
+            type: string
+        - name: pid
+          in: path
+          required: true
+          description: ID de la mascota adoptada
+          schema:
+            type: string
+      responses:
+        "200":
+          description: Adopción eliminada exitosamente
+        "404":
+          description: Adopción no encontrada
+        "500":
+          description: Error del servidor
+components:
+  schemas:
+    Adoption:
+      type: object
+      properties:
+        uid:
+          type: string
+          description: ID del usuario adoptante
+        pid:
+          type: string
+          description: ID de la mascota adoptada
+        required:
+          - uid
+          - pid

@@ -1,0 +1,91 @@
+paths:
+  /api/users:
+    get:
+      summary: Obtener todos los usuarios
+      description: Devuelve una lista de todos los usuarios en el sistema.
+      tags:
+        - Users
+      responses:
+        200:
+          description: Lista de usuarios
+        404:
+          description: No se encontraron usuarios
+        500:
+          description: Error del servidor
+  /api/users/{id}:
+    get:
+      summary: Obtener un usuario por ID
+      description: Devuelve los detalles de un usuario específico por su ID.
+      tags:
+        - Users
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        200:
+          description: Usuario encontrado
+        404:
+          description: Usuario no encontrado
+        500:
+          description: Error del servidor
+    put:
+      summary: Actualizar un usuario existente
+      description: Actualiza los datos de un usuario existente en el sistema.
+      tags:
+        - Users
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/User"
+      responses:
+        200:
+          description: Usuario actualizado
+    delete:
+      summary: Eliminar un usuario existente
+      description: Elimina un usuario del sistema.
+      tags:
+        - Users
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        200:
+          description: Usuario eliminado
+components:
+  schemas:
+    User:
+      type: object
+      properties:
+        firstName:
+          type: string
+          description: Nombre del usuario
+        lastName:
+          type: string
+          description: Apellido del usuario
+        email:
+          type: string
+          format: email
+          description: Correo electrónico del usuario
+        password:
+          type: string
+          format: password
+          description: Contraseña del usuario
+      required:
+        - firstName
+        - lastName
+        - email
+        - password

@@ -64,7 +64,7 @@ npm run test
 ## Imagen de Docker
 
 ```dockerfile
-docker pull lacruzjd/adomtme-image
+docker pull lacruzjd/adoptme-image
 ```
 
 ### Configuración Contenedor Docker
